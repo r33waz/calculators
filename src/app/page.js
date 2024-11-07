@@ -735,7 +735,7 @@ function Calculator() {
           {calculators.map((item, index) => (
             <div key={index} className=" hover:scale-105 duration-300">
               <ShapeCard className="flex flex-col w-full justify-between md:gap-4 p-2 h-80">
-                <h1 className="md:text-base font-medium underline underline-offset-2 decoration-green">
+                <h1 className="md:text-base font-medium ">
                   {item.name}
                 </h1>
                 <span className="flex justify-center  transition-opacity duration-300">

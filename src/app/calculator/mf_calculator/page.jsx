@@ -12,7 +12,7 @@ import Pie_Chart from "@/components/charts/pieChart";
 import formatNumberInNepali from "@/utils/formattedNumber";
 
 function MfCalculator() {
-  const [investmentAmount, setInvestmentAmount] = useState(500); 
+  const [investmentAmount, setInvestmentAmount] = useState(25000); 
   const [annualReturnRate, setAnnualReturnRate] = useState(6); // in percentage
   const [investmentDuration, setInvestmentDuration] = useState(1); // in years
   const [totalInvestment, setTotalInvestment] = useState(0);
@@ -22,20 +22,15 @@ function MfCalculator() {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   const calculateMutualFund = () => {
-    const totalPeriods = investmentDuration * 12; // Total number of periods (N)
-    const ratePerPeriod = annualReturnRate / 12 / 100; // Periodic interest rate (R)
+    const ratePerPeriod = annualReturnRate / 100; 
 
-    const futureValue =
-      investmentAmount *
-      (((1 + ratePerPeriod) ** totalPeriods - 1) / ratePerPeriod) *
-      (1 + ratePerPeriod);
-
-    const totalInvested = investmentAmount * totalPeriods;
+    const futureValue = investmentAmount * (1 + ratePerPeriod) ** investmentDuration;
+    const totalInvested = investmentAmount;
     const returns = futureValue - totalInvested;
 
-    setTotalInvestment(totalInvested.toFixed(0) || 0);
-    setEstimatedReturns(returns.toFixed(0) || 0);
-    setTotalValue(futureValue.toFixed(0) || 0);
+    setTotalInvestment(totalInvested.toFixed(0));
+    setEstimatedReturns(returns.toFixed(0));
+    setTotalValue(futureValue.toFixed(0));
   };
 
   useEffect(() => {
@@ -167,6 +162,7 @@ function MfCalculator() {
                 type="range"
                 min="1"
                 max="50"
+                step="0.1"
                 value={annualReturnRate}
                 onChange={(e) => setAnnualReturnRate(Number(e.target.value))}
                 className="mt-1 w-full outline-none"
@@ -243,7 +239,7 @@ function MfCalculator() {
                 <div className="flex w-full justify-between">
                   <p>Total Investment:</p>
                   <p className="text-[#0088FE]">
-                    Rs {formatNumberInNepali(totalInvestment)}
+                    Rs {formatNumberInNepali(investmentAmount)}
                   </p>
                 </div>
                 <div className="flex w-full justify-between">
